@@ -1,0 +1,144 @@
+     Donnez le mot initial des anagrammes<input id="inp" />
+     <br>
+     <button onClick="fgo()">Générer Anagrammes</button><br><br>
+
+     <scr_ipt>"use strict";
+     function fgo(){
+         console.time();
+         const stg=document.getElementById("inp").value,
+               stgA=[...stg],
+               L=stg.length;
+
+         let arr=[], arrTmp=[];
+
+         console.log(`ANAGRAMMES DES MOTS DE JUSQU'À 8 CARACTÈRES (${stg}).`);
+
+
+       // Créer TOUTES les différentes permutations.
+       // selon la taille de la chaîne du mot initial.
+       //
+       /*
+              if(L==10)arr=stgA.map(q=>
+                stgA.map(r=>
+                stgA.map(s=>
+                stgA.map(t=>
+                stgA.map(u=>
+                stgA.map(v=>
+                stgA.map(w=>
+                stgA.map(x=>
+                stgA.map(y=>
+                stgA.map(z=>a+r+s+t+u+v+w+x+y+z))))))))))
+         else if(L==9)arr=stgA.map(r=>
+                stgA.map(s=>
+                stgA.map(t=>
+                stgA.map(u=>
+                stgA.map(v=>
+                stgA.map(w=>
+                stgA.map(x=>
+                stgA.map(y=>
+                stgA.map(z=>r+s+t+u+v+w+x+y+z)))))))))
+         else */
+              if(L==8)arr=stgA.map(s=>
+                stgA.map(t=>
+                stgA.map(u=>
+                stgA.map(v=>
+                stgA.map(w=>
+                stgA.map(x=>
+                stgA.map(y=>
+                stgA.map(z=>s+t+u+v+w+x+y+z))))))))
+         else if(L==7)arr=stgA.map(t=>
+                stgA.map(u=>
+                stgA.map(v=>
+                stgA.map(w=>
+                stgA.map(x=>
+                stgA.map(y=>
+                stgA.map(z=>t+u+v+w+x+y+z)))))))
+         else if(L==6)arr=stgA.map(u=>
+                stgA.map(v=>
+                stgA.map(w=>
+                stgA.map(x=>
+                stgA.map(y=>
+                stgA.map(z=>u+v+w+x+y+z))))))
+         else if(L==5)arr=stgA.map(v=>
+                stgA.map(w=>
+                stgA.map(x=>
+                stgA.map(y=>
+                stgA.map(z=>v+w+x+y+z)))))
+         else if(L==4)arr=stgA.map(w=>
+                stgA.map(x=>
+                stgA.map(y=>
+                stgA.map(z=>w+x+y+z))))
+         else if(L==3)arr=stgA.map(x=>
+                stgA.map(y=>
+                stgA.map(z=>x+y+z)))
+         else if(L==2)arr=stgA.map(y=>
+                stgA.map(z=>y+z));
+
+
+       // Placez dans un même et seul Array,
+       // TOUTES les recombinaisons ayant la même
+       // taille que la chaîne d'origine,
+       // et l'afficher.
+       //
+         const arrFlat=arr.flat(Number(L));
+         const afL=arrFlat.length;
+         if(afL<=100) console.dir(arrFlat.join(" | "))
+         else {
+           for(let k=0 ; k<100 ; k++) arrTmp.push(arrFlat[k]);
+           console.dir(arrTmp.join(" | "));
+         }
+         console.log(`...\n${afL} total des RECOMBINAISONS\n`);
+
+
+       // Supprimer les mots qui ne sont pas
+       // ANAGRAMMESdu mot initial, et les placer
+       // dans la variable "definitifs".
+       //
+         const definitifs=arrFlat.filter(x =>
+                 String(fFreqEls([...x].sort()).a)
+                 ==
+                 String(fFreqEls(stgA.sort()).a));
+
+
+       // Afficher tous les mots ANAGRAMMES avec leurs doublons.
+       //
+         const dfL=definitifs.length;
+         console.log(`\n${dfL} ANAGRAMMES avec leurs doublons`);
+         arrTmp=[];
+         if(dfL<=100) console.log(`${definitifs}`)
+         else {
+           for(let k=0 ; k<100 ; k++)arrTmp.push(definitifs[k]);
+           console.dir(arrTmp.join(", "));
+         }
+         console.log("...\n"+dfL+" ANAGRAMMES aVEC DOUBLONS");
+
+
+
+       // Supprimetrs les ANAGRAMMES doublons avec la méthode Set()
+       //
+          const setDefinitifs = new Set(definitifs),
+                defSize = setDefinitifs.size ;
+
+
+       // Nombre d'ANAGRAMMES reconstitués.
+       //
+         console.log(
+          `\nVoici les ***${defSize} ANAGRAMMES*** distincts au mot ${stg.toUpperCase()}`
+         );
+
+       // Afficher TOUS les mots ANAGRAMMES sans doublons.
+       //
+         console.dir(`${[...setDefinitifs].join(" , ")}`);
+
+
+       /**********************/
+
+
+       function fFreqEls(arr){
+         const a = [...new Set(arr)].map(x=>x+" = "+(arr.filter(y=>x==y).length) +"×"),
+               l = a.length;
+         return {a:a,l:l};
+       }
+       console.timeEnd();
+     }
+     </scr_ipt>
